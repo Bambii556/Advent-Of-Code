@@ -1,5 +1,17 @@
 import { Solution } from "../../types.ts";
-import { parseInputs, Part } from "./inputParser.ts";
+import { parseInputs, Part, Workflow } from "./inputParser.ts";
+
+interface Range {
+  min: number;
+  max: number;
+}
+
+interface PartRange {
+  x: Range;
+  m: Range;
+  a: Range;
+  s: Range;
+}
 
 export const day19: Solution = {
   part1: async (input: string) => {
@@ -54,10 +66,14 @@ export const day19: Solution = {
 
   part2: async (input: string) => {
     const { workflows } = parseInputs(input);
+    const initialRange: PartRange = {
+      x: { min: 1, max: 4000 },
+      m: { min: 1, max: 4000 },
+      a: { min: 1, max: 4000 },
+      s: { min: 1, max: 4000 },
+    };
 
-    let sum = 0;
-
-    return sum;
+    return processRange(initialRange, "in", workflows);
   },
 };
 
@@ -100,4 +116,106 @@ function parseComparison(
     default:
       throw new Error(`Unknown operator: ${operator}`);
   }
+}
+
+function processRange(
+  range: PartRange,
+  workflowName: string,
+  workflows: Map<string, Workflow>,
+): number {
+  // Base cases
+  if (workflowName === "A") {
+    return countCombinations(range);
+  }
+  if (workflowName === "R") {
+    return 0;
+  }
+
+  const workflow = workflows.get(workflowName);
+  if (!workflow) {
+    throw new Error(`Workflow not found: ${workflowName}`);
+  }
+
+  let total = 0;
+  let currentRange: PartRange | null = range;
+
+  for (const rule of workflow.rules) {
+    if (!currentRange) break;
+
+    if (!rule.condition) {
+      total += processRange(currentRange, rule.destination, workflows);
+      currentRange = null;
+    } else {
+      const { passing, failing } = splitRange(currentRange, rule.condition);
+
+      if (passing) {
+        total += processRange(passing, rule.destination, workflows);
+      }
+
+      currentRange = failing;
+    }
+  }
+
+  return total;
+}
+
+function splitRange(
+  range: PartRange,
+  condition: string,
+): { passing: PartRange | null; failing: PartRange | null } {
+  const match = condition.match(/^(\w+)([<>])(\d+)$/);
+
+  if (!match) {
+    throw new Error(`Invalid condition: ${condition}`);
+  }
+
+  const [, variable, operator, valueStr] = match;
+  const value = parseInt(valueStr, 10);
+  const key = variable as keyof PartRange;
+
+  const passing = { ...range, [key]: { ...range[key] } };
+  const failing = { ...range, [key]: { ...range[key] } };
+
+  if (operator === "<") {
+    passing[key] = {
+      min: range[key].min,
+      max: Math.min(range[key].max, value - 1),
+    };
+    failing[key] = {
+      min: Math.max(range[key].min, value),
+      max: range[key].max,
+    };
+  } else if (operator === ">") {
+    passing[key] = {
+      min: Math.max(range[key].min, value + 1),
+      max: range[key].max,
+    };
+    failing[key] = {
+      min: range[key].min,
+      max: Math.min(range[key].max, value),
+    };
+  }
+
+  return {
+    passing: isValidRange(passing) ? passing : null,
+    failing: isValidRange(failing) ? failing : null,
+  };
+}
+
+function countCombinations(range: PartRange): number {
+  return (
+    (range.x.max - range.x.min + 1) *
+    (range.m.max - range.m.min + 1) *
+    (range.a.max - range.a.min + 1) *
+    (range.s.max - range.s.min + 1)
+  );
+}
+
+function isValidRange(range: PartRange): boolean {
+  return (
+    range.x.min <= range.x.max &&
+    range.m.min <= range.m.max &&
+    range.a.min <= range.a.max &&
+    range.s.min <= range.s.max
+  );
 }
