@@ -2,19 +2,26 @@ import { DayTests, runTestPart } from "../../utils/test_utils.ts";
 import { day9 as solution } from "./index.ts";
 import { log } from "../../utils/index.ts";
 
-const input = ``;
+const input = `7,1
+11,1
+11,7
+9,7
+9,5
+2,5
+2,3
+7,3`;
 
 const tests: DayTests = {
   part1: [
     {
       input,
-      expected: 0,
+      expected: 50,
     },
   ],
   part2: [
     {
       input,
-      expected: 0,
+      expected: 24,
     },
   ],
 };
