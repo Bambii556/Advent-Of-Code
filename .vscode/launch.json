@@ -13,7 +13,7 @@
         "--allow-write"
       ],
       "program": "${workspaceFolder}/src/main.ts",
-      "args": ["2025", "11"],
+      "args": ["2025", "12"],
       "cwd": "${workspaceFolder}",
       "attachSimplePort": 9229,
       "console": "integratedTerminal"

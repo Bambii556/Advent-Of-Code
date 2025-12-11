@@ -2,19 +2,42 @@ import { DayTests, runTestPart } from "../../utils/test_utils.ts";
 import { day11 as solution } from "./index.ts";
 import { log } from "../../utils/index.ts";
 
-const input = ``;
+const input = `aaa: you hhh
+you: bbb ccc
+bbb: ddd eee
+ccc: ddd eee fff
+ddd: ggg
+eee: out
+fff: out
+ggg: out
+hhh: ccc fff iii
+iii: out`;
+
+const input2 = `svr: aaa bbb
+aaa: fft
+fft: ccc
+bbb: tty
+tty: ccc
+ccc: ddd eee
+ddd: hub
+hub: fff
+eee: dac
+dac: fff
+fff: ggg hhh
+ggg: out
+hhh: out`;
 
 const tests: DayTests = {
   part1: [
     {
       input,
-      expected: 0,
+      expected: 5,
     },
   ],
   part2: [
     {
-      input,
-      expected: 0,
+      input: input2,
+      expected: 2,
     },
   ],
 };
