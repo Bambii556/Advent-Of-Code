@@ -2,21 +2,48 @@ import { DayTests, runTestPart } from "../../utils/test_utils.ts";
 import { day12 as solution } from "./index.ts";
 import { log } from "../../utils/index.ts";
 
-const input = ``;
+const input = `0:
+###
+##.
+##.
+
+1:
+###
+##.
+.##
+
+2:
+.##
+###
+##.
+
+3:
+##.
+###
+##.
+
+4:
+###
+#..
+###
+
+5:
+###
+.#.
+###
+
+4x4: 0 0 0 0 2 0
+12x5: 1 0 1 0 2 2
+12x5: 1 0 1 0 3 2`;
 
 const tests: DayTests = {
   part1: [
     {
       input,
-      expected: 0,
+      expected: 2,
     },
   ],
-  part2: [
-    {
-      input,
-      expected: 0,
-    },
-  ],
+  part2: [],
 };
 
 export async function runPart1Tests() {
