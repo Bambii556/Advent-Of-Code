@@ -137,4 +137,4 @@ _"It's not a bug, it's an undocumented feature"_ - Me, probably, at 2 AM on
 December 15th
 
 **Remember**: If your code works but you don't know why, that's Advent of Code.
-If your code doesn't work and you don't know why, that's also Advent of Code. 🎅
+If your code doesn't work and you don't know why, that's also Advent of Code.
