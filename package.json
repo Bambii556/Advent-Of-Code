@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "bun --watch src/main.ts",
     "day": "bun src/main.ts",
+    "today": "bun src/main.ts --today",
     "scaffold": "bun src/scaffold.ts",
     "test": "bun src/main.ts --test",
     "check": "biome check --write .",

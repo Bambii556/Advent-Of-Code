@@ -104,8 +104,25 @@ export async function runDay(
   return passed;
 }
 
+export function puzzleForDate(now: Date): { year: number; day: number } | null {
+  if (now.getMonth() !== 11) return null;
+  const day = now.getDate();
+  if (day < 1 || day > 25) return null;
+  return { year: now.getFullYear(), day };
+}
+
 async function main() {
   const args = process.argv.slice(2);
+
+  if (args[0] === "--today") {
+    const target = puzzleForDate(new Date());
+    if (!target) {
+      log("No Advent of Code puzzle today (December 1-25 only)");
+      process.exit(1);
+    }
+    const passed = await runDay(target, "run");
+    process.exit(passed ? 0 : 1);
+  }
 
   if (args[0] === "--test") {
     const year = args[1] === undefined ? undefined : Number(args[1]);

@@ -33,6 +33,9 @@ bun run scaffold 2025 13
 # Run one day: example tests, then the real input
 bun run day 2025 4
 
+# Run today's puzzle (December 1-25)
+bun run today
+
 # Run example tests for every day (or one year)
 bun run test
 bun run test 2025
