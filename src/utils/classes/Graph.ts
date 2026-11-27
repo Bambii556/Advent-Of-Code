@@ -114,7 +114,7 @@ export default class Graph<T> {
       if (!current) break;
 
       const currentKey = getKey(current);
-      const currentDist = distances.get(currentKey) || Infinity;
+      const currentDist = distances.get(currentKey) ?? Infinity;
 
       if (isEnd(current)) {
         const path: T[] = [];

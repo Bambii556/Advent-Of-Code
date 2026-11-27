@@ -394,6 +394,7 @@ export function getOverlappingPairs<T>(arr: T[]): [T, T][] {
  * const columnPatterns = transpose(patterns);
  */
 export function transpose<T>(matrix: T[][]): T[][] {
+  if (matrix.length === 0) return [];
   // matrix[0].map creates an array with length equal to the number of columns
   return matrix[0].map((_, colIndex) =>
     // For each column, map through all rows and get item at colIndex

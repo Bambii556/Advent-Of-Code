@@ -437,3 +437,33 @@ export function getAllCoordsOfCharacter(
   }
   return coords;
 }
+
+/**
+ * Adjacent coordinates (up, right, down, left) that are inside the grid.
+ *
+ * @example
+ * getAdjacentInBounds(0, 0, [[1, 2], [3, 4]]) // Returns [[1, 0], [0, 1]]
+ */
+export function getAdjacentInBounds(
+  row: number,
+  col: number,
+  grid: unknown[][],
+): [number, number][] {
+  return getAdjacent(row, col).filter(([r, c]) => isInBounds(r, c, grid));
+}
+
+/**
+ * Adjacent coordinates including diagonals that are inside the grid.
+ *
+ * @example
+ * getAdjacentWithDiagonalsInBounds(0, 0, [[1, 2], [3, 4]])
+ */
+export function getAdjacentWithDiagonalsInBounds(
+  row: number,
+  col: number,
+  grid: unknown[][],
+): [number, number][] {
+  return getAdjacentWithDiagonals(row, col).filter(([r, c]) =>
+    isInBounds(r, c, grid),
+  );
+}

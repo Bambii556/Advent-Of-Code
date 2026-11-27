@@ -53,7 +53,7 @@ export function mergeRanges(ranges: [number, number][]): [number, number][] {
   if (ranges.length === 0) return [];
 
   const sorted = [...ranges].sort(([a], [b]) => a - b); // Sort by start value
-  const merged: [number, number][] = [sorted[0]]; // Initialize with first range
+  const merged: [number, number][] = [[sorted[0][0], sorted[0][1]]];
 
   for (const [start, end] of sorted.slice(1)) {
     const lastEnd = merged[merged.length - 1][1];

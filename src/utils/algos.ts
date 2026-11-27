@@ -89,6 +89,8 @@ export function solveCramer(
 export function gcdLarge(a: number, b: number): number {
   a = Math.abs(a);
   b = Math.abs(b);
+  if (a === 0) return b;
+  if (b === 0) return a;
 
   // Use binary GCD algorithm
   let shift = 0;
@@ -373,4 +375,145 @@ export function memoize<TArgs extends unknown[], TResult>(
     cache.set(key, result);
     return result;
   };
+}
+
+/**
+ * GCD of a list of numbers. Returns 0 for an empty list.
+ *
+ * @example
+ * gcdArray([12, 18, 24]) // Returns 6
+ */
+export function gcdArray(numbers: number[]): number {
+  return numbers.reduce((a, b) => gcd(a, b), 0);
+}
+
+/**
+ * Modular exponentiation: (base ** exponent) % modulus.
+ *
+ * shortcut: plain number math, overflows past 2^53. Use BigInt for bigger.
+ *
+ * @example
+ * modPow(2, 10, 1000) // Returns 24
+ */
+export function modPow(
+  base: number,
+  exponent: number,
+  modulus: number,
+): number {
+  if (modulus === 1) return 0;
+
+  let result = 1;
+  let b = ((base % modulus) + modulus) % modulus;
+  let e = exponent;
+
+  while (e > 0) {
+    if (e % 2 === 1) result = (result * b) % modulus;
+    b = (b * b) % modulus;
+    e = Math.floor(e / 2);
+  }
+
+  return result;
+}
+
+/**
+ * Modular inverse of `a` modulo `m` using the extended Euclidean algorithm.
+ * Returns null when no inverse exists (a and m are not coprime).
+ *
+ * @example
+ * modInverse(3n, 11n) // Returns 4n
+ */
+export function modInverse(a: bigint, m: bigint): bigint | null {
+  if (m <= 0n) return null;
+
+  let [oldR, r] = [((a % m) + m) % m, m];
+  let [oldS, s] = [1n, 0n];
+
+  while (r !== 0n) {
+    const q = oldR / r;
+    [oldR, r] = [r, oldR - q * r];
+    [oldS, s] = [s, oldS - q * s];
+  }
+
+  if (oldR !== 1n) return null;
+  return ((oldS % m) + m) % m;
+}
+
+/**
+ * Chinese Remainder Theorem for pairwise-coprime moduli.
+ * Returns the smallest non-negative solution, or null if there is none.
+ *
+ * @example
+ * crt([2, 3, 2], [3, 5, 7]) // Returns 23n
+ */
+export function crt(remainders: number[], moduli: number[]): bigint | null {
+  if (remainders.length !== moduli.length || remainders.length === 0) {
+    return null;
+  }
+
+  let product = 1n;
+  for (const modulus of moduli) {
+    if (modulus <= 0) return null;
+    product *= BigInt(modulus);
+  }
+
+  let total = 0n;
+  for (let i = 0; i < remainders.length; i++) {
+    const modulus = BigInt(moduli[i]);
+    const partial = product / modulus;
+    const inverse = modInverse(partial, modulus);
+    if (inverse === null) return null;
+    total = (total + BigInt(remainders[i]) * partial * inverse) % product;
+  }
+
+  return ((total % product) + product) % product;
+}
+
+/**
+ * Area of a simple polygon via the shoelace formula.
+ * Points must be in order (clockwise or counter-clockwise).
+ *
+ * @example
+ * shoelaceArea([[0,0], [4,0], [4,3], [0,3]]) // Returns 12
+ */
+export function shoelaceArea(points: [number, number][]): number {
+  if (points.length < 3) return 0;
+
+  let twiceArea = 0;
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    twiceArea += x1 * y2 - x2 * y1;
+  }
+
+  return Math.abs(twiceArea) / 2;
+}
+
+/**
+ * Number of lattice points on the boundary of a simple polygon.
+ * Sum of gcd(|dx|, |dy|) over every edge.
+ *
+ * @example
+ * polygonBoundaryPoints([[0,0], [4,0], [4,3], [0,3]]) // Returns 14
+ */
+export function polygonBoundaryPoints(points: [number, number][]): number {
+  let boundary = 0;
+  for (let i = 0; i < points.length; i++) {
+    const [x1, y1] = points[i];
+    const [x2, y2] = points[(i + 1) % points.length];
+    boundary += gcd(Math.abs(x2 - x1), Math.abs(y2 - y1));
+  }
+  return boundary;
+}
+
+/**
+ * Interior lattice points from Pick's theorem: area - boundary / 2 + 1.
+ *
+ * @example
+ * polygonInteriorPoints(12, 14) // Returns 6
+ */
+export function polygonInteriorPoints(
+  area: number,
+  boundaryPoints: number,
+): number {
+  return area - boundaryPoints / 2 + 1;
 }

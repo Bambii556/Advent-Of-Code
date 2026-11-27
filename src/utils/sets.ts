@@ -48,3 +48,28 @@ export function setUnion<T>(setA: Set<T>, setB: Set<T>): Set<T> {
 export function setDifference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
   return new Set([...setA].filter((x) => !setB.has(x)));
 }
+
+/**
+ * Returns elements present in exactly one of the two Sets.
+ *
+ * @example
+ * symmetricDifference(new Set([1, 2]), new Set([2, 3])) // Returns Set(1, 3)
+ */
+export function symmetricDifference<T>(setA: Set<T>, setB: Set<T>): Set<T> {
+  const result = new Set<T>();
+  for (const item of setA) if (!setB.has(item)) result.add(item);
+  for (const item of setB) if (!setA.has(item)) result.add(item);
+  return result;
+}
+
+/**
+ * Check whether two Sets contain exactly the same elements.
+ *
+ * @example
+ * setEquals(new Set([1, 2]), new Set([2, 1])) // Returns true
+ */
+export function setEquals<T>(setA: Set<T>, setB: Set<T>): boolean {
+  if (setA.size !== setB.size) return false;
+  for (const item of setA) if (!setB.has(item)) return false;
+  return true;
+}

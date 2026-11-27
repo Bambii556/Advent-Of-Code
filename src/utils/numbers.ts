@@ -316,6 +316,8 @@ export function isPrime(n: number): boolean {
  * - For larger numbers, consider probabilistic methods
  */
 export function getPrimeFactors(n: number): number[] {
+  if (n <= 1) return [];
+
   const factors: number[] = [];
   let num = n;
 
@@ -339,4 +341,55 @@ export function getPrimeFactors(n: number): number[] {
   }
 
   return factors;
+}
+
+/**
+ * Integer square root (floor). Returns 0 for negative or non-finite input.
+ *
+ * @example
+ * integerSqrt(99) // Returns 9
+ */
+export function integerSqrt(n: number): number {
+  if (!Number.isFinite(n) || n < 2) return Math.max(0, Math.floor(n || 0));
+
+  let root = Math.floor(Math.sqrt(n));
+  // Math.sqrt may drift on large numbers, so correct the guess
+  while ((root + 1) * (root + 1) <= n) root++;
+  while (root * root > n) root--;
+  return root;
+}
+
+/**
+ * Check if a number is a perfect square.
+ *
+ * @example
+ * isPerfectSquare(144) // Returns true
+ * isPerfectSquare(145) // Returns false
+ */
+export function isPerfectSquare(n: number): boolean {
+  if (n < 0) return false;
+  const root = integerSqrt(n);
+  return root * root === n;
+}
+
+/**
+ * All divisors of a positive integer in ascending order.
+ *
+ * @example
+ * getDivisors(12) // Returns [1, 2, 3, 4, 6, 12]
+ */
+export function getDivisors(n: number): number[] {
+  if (n <= 0) return [];
+
+  const small: number[] = [];
+  const large: number[] = [];
+  const limit = integerSqrt(n);
+
+  for (let i = 1; i <= limit; i++) {
+    if (n % i !== 0) continue;
+    small.push(i);
+    if (i !== n / i) large.push(n / i);
+  }
+
+  return small.concat(large.reverse());
 }

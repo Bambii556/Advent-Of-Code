@@ -76,13 +76,14 @@ export async function runDay(
   if (solution.title) log(solution.title);
 
   const tests = await loadTests(year, day);
-  const input =
-    mode === "run"
-      ? await readFile(
-          new URL(`./${year}/day${day}/input.txt`, import.meta.url),
-          "utf8",
-        )
-      : "";
+  let input = "";
+  if (mode === "run") {
+    const raw = await readFile(
+      new URL(`./${year}/day${day}/input.txt`, import.meta.url),
+      "utf8",
+    );
+    input = raw.replace(/\r\n/g, "\n");
+  }
 
   let passed = true;
   for (const part of [1, 2] as const) {
