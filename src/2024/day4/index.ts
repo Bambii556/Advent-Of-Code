@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { log, parseGrid } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day4: Solution = {
   part1: async (input: string) => {
@@ -45,9 +45,11 @@ function findXMAS(grid: string[][]): number {
       ];
 
       // Check if any two crossing diagonals form MAS
-      for (let i = 0; i < 2; i++) { // First diagonal
+      for (let i = 0; i < 2; i++) {
+        // First diagonal
         if (!isMAS(diagonals[i])) continue;
-        for (let j = 2; j < 4; j++) { // Second diagonal
+        for (let j = 2; j < 4; j++) {
+          // Second diagonal
           if (isMAS(diagonals[j])) {
             count++;
             j = 4; // Break inner loop
@@ -128,10 +130,7 @@ function checkDirection(
   // Check if word would go out of bounds
   const endRow = startRow + dy * (word.length - 1);
   const endCol = startCol + dx * (word.length - 1);
-  if (
-    endRow < 0 || endRow >= height ||
-    endCol < 0 || endCol >= width
-  ) {
+  if (endRow < 0 || endRow >= height || endCol < 0 || endCol >= width) {
     return null;
   }
 

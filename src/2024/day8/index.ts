@@ -1,5 +1,5 @@
-import { log, parseGrid } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { parseGrid } from "../../utils/index.ts";
 
 type Grid = string[][];
 
@@ -42,7 +42,9 @@ function findResonantPoints(
     if (points.length < 2) continue;
 
     if (includeHarmonics) {
-      points.forEach((p) => resonantPoints.add(`${p.x},${p.y}`));
+      points.forEach((p) => {
+        resonantPoints.add(`${p.x},${p.y}`);
+      });
     }
 
     // For each pair of points with the same frequency
@@ -103,17 +105,12 @@ function getAllFrequencies(grid: Grid) {
 }
 
 function getDistance(p1: Point, p2: Point): number {
-  return Math.sqrt(
-    Math.pow(p2.x - p1.x, 2) +
-      Math.pow(p2.y - p1.y, 2),
-  );
+  return Math.sqrt((p2.x - p1.x) ** 2 + (p2.y - p1.y) ** 2);
 }
 
 function areCollinear(p1: Point, p2: Point, p3: Point): boolean {
   const area = Math.abs(
-    (p1.x * (p2.y - p3.y) +
-      p2.x * (p3.y - p1.y) +
-      p3.x * (p1.y - p2.y)) / 2,
+    (p1.x * (p2.y - p3.y) + p2.x * (p3.y - p1.y) + p3.x * (p1.y - p2.y)) / 2,
   );
   return Math.abs(area) < 0.0001; // Using epsilon for floating point comparison
 }

@@ -2,16 +2,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Deno: Run Current Day",
+      "name": "Bun: Run Current Day",
       "request": "launch",
       "type": "node",
-      "runtimeExecutable": "deno",
-      "runtimeArgs": [
-        "run",
-        "--inspect-brk",
-        "--allow-read",
-        "--allow-write"
-      ],
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--inspect-brk"],
       "program": "${workspaceFolder}/src/main.ts",
       "args": ["2025", "12"],
       "cwd": "${workspaceFolder}",
@@ -19,15 +14,11 @@
       "console": "integratedTerminal"
     },
     {
-      "name": "Deno: Run Specific Day",
+      "name": "Bun: Run Specific Day",
       "request": "launch",
       "type": "node",
-      "runtimeExecutable": "deno",
-      "runtimeArgs": [
-        "run",
-        "--inspect-brk",
-        "--allow-read"
-      ],
+      "runtimeExecutable": "bun",
+      "runtimeArgs": ["--inspect-brk"],
       "program": "${workspaceFolder}/src/main.ts",
       "args": ["2024", "${input:dayNumber}"],
       "cwd": "${workspaceFolder}",
@@ -39,8 +30,8 @@
     {
       "id": "yearNumber",
       "type": "promptString",
-      "description": "Enter the Year (2020-2024)",
-      "default": "2024"
+      "description": "Enter the Year (2020-2025)",
+      "default": "2025"
     },
     {
       "id": "dayNumber",

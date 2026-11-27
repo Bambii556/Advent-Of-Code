@@ -1,9 +1,6 @@
-import { getInputLines, log, unique } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
-import { RegexPatterns } from "../../utils/utils.ts";
-import { gcd, memoize } from "../../utils/algos.ts";
+import type { Solution } from "../../types.ts";
 import { lcm } from "../../utils/algos.ts";
-import { lcmArray } from "../../utils/algos.ts";
+import { RegexPatterns } from "../../utils/utils.ts";
 
 type Nodes = Map<string, [string, string]>;
 
@@ -27,11 +24,11 @@ export const day8: Solution = {
   part2: async (input: string) => {
     const { instructions, nodes } = parseInput(input);
     const startingNodes = Array.from(nodes.keys()).filter((x) =>
-      x.endsWith("A")
+      x.endsWith("A"),
     );
 
     const patterns = startingNodes.map((start) =>
-      findZPositions(start, instructions, nodes)
+      findZPositions(start, instructions, nodes),
     );
 
     const steps = findAlignmentStep(patterns);

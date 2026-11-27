@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface Machine {
   target: boolean[];
@@ -17,7 +17,7 @@ export const day10: Solution = {
       const numLights = machine.target.length;
       let minPresses = Infinity;
 
-      for (let mask = 0; mask < (1 << numButtons); mask++) {
+      for (let mask = 0; mask < 1 << numButtons; mask++) {
         const lights = new Array(numLights).fill(false);
 
         let presses = 0;
@@ -69,9 +69,9 @@ function solveJoltageILP(machine: Machine): number | null {
   }
 
   // coefficient matrix
-  const matrix: number[][] = Array(numCounters).fill(0).map(() =>
-    Array(numButtons).fill(0)
-  );
+  const matrix: number[][] = Array(numCounters)
+    .fill(0)
+    .map(() => Array(numButtons).fill(0));
 
   for (let btnIdx = 0; btnIdx < numButtons; btnIdx++) {
     for (const counterIdx of machine.buttons[btnIdx]) {
@@ -189,7 +189,10 @@ function parseInput(input: string): Machine[] {
     });
 
     const joltage: number[] = joltageMatch
-      ? joltageMatch[0].slice(1, -1).split(",").map((n) => parseInt(n, 10))
+      ? joltageMatch[0]
+          .slice(1, -1)
+          .split(",")
+          .map((n) => parseInt(n, 10))
       : [];
 
     return { target, buttons, joltage };

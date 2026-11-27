@@ -1,6 +1,6 @@
-import { log, RegexPatterns, solveCramer } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { sum } from "../../utils/array.ts";
+import { RegexPatterns, solveCramer } from "../../utils/index.ts";
 
 type ClawMachine = {
   a: [x: number, y: number];
@@ -29,7 +29,7 @@ function getMachinesPrizeCosts(machines: Machines): number[] {
   for (const machine of machines) {
     const buttonPresses = calcButtonPressesToWin(machine);
     if (buttonPresses) {
-      prizeCosts.push((buttonPresses[0] * 3) + buttonPresses[1]);
+      prizeCosts.push(buttonPresses[0] * 3 + buttonPresses[1]);
     }
   }
   return prizeCosts;
@@ -63,14 +63,22 @@ function calcButtonPressesToWin(
   const [bX, bY] = machine.b;
   const [targetX, targetY] = machine.prize;
 
-  const solution = solveCramer([[aX, bX], [aY, bY]], [targetX, targetY]);
+  const solution = solveCramer(
+    [
+      [aX, bX],
+      [aY, bY],
+    ],
+    [targetX, targetY],
+  );
 
   if (!solution) return null;
 
   const [pressA, pressB] = solution;
 
   if (
-    pressA < 0 || pressB < 0 || !Number.isInteger(pressA) ||
+    pressA < 0 ||
+    pressB < 0 ||
+    !Number.isInteger(pressA) ||
     !Number.isInteger(pressB)
   ) {
     return null;

@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface Point {
   x: number;
@@ -26,11 +26,11 @@ export const day9: Solution = {
     const redTiles = parseInputs(input);
 
     // Get unique x and y values for coordinate compression
-    const xValues = [...new Set(redTiles.map((t) => t.x))].sort((a, b) =>
-      a - b
+    const xValues = [...new Set(redTiles.map((t) => t.x))].sort(
+      (a, b) => a - b,
     );
-    const yValues = [...new Set(redTiles.map((t) => t.y))].sort((a, b) =>
-      a - b
+    const yValues = [...new Set(redTiles.map((t) => t.y))].sort(
+      (a, b) => a - b,
     );
 
     // Create a grid with compressed coordinates
@@ -69,15 +69,22 @@ export const day9: Solution = {
 
       while (stack.length > 0) {
         const current = stack.pop()!;
-        const directions = [[1, 0], [-1, 0], [0, 1], [0, -1]];
+        const directions = [
+          [1, 0],
+          [-1, 0],
+          [0, 1],
+          [0, -1],
+        ];
 
         for (const [dx, dy] of directions) {
           const nx = current.x + dx;
           const ny = current.y + dy;
 
           if (
-            nx >= 0 && nx < grid.length &&
-            ny >= 0 && ny < grid[0].length &&
+            nx >= 0 &&
+            nx < grid.length &&
+            ny >= 0 &&
+            ny < grid[0].length &&
             grid[nx][ny] === 0
           ) {
             grid[nx][ny] = 2;
@@ -132,6 +139,6 @@ export const day9: Solution = {
 function parseInputs(input: string) {
   return getInputLines(input).map((line) => {
     const [x, y] = line.split(",");
-    return { x: parseInt(x), y: parseInt(y) } as Point;
+    return { x: parseInt(x, 10), y: parseInt(y, 10) } as Point;
   });
 }

@@ -1,5 +1,5 @@
-import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { getInputLines } from "../../utils/index.ts";
 
 interface Point {
   x: number;
@@ -139,7 +139,8 @@ function buildPlot(
         };
 
         if (
-          !isInPoints(plot.points, posOne) && !isInPoints(plot.points, posTwo)
+          !isInPoints(plot.points, posOne) &&
+          !isInPoints(plot.points, posTwo)
         ) {
           cornerCount++;
           continue;
@@ -155,7 +156,6 @@ function buildPlot(
           !isInPoints(plot.points, diagonal)
         ) {
           cornerCount++;
-          continue;
         }
       }
       if (cornerCount > 0) {

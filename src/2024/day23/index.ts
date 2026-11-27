@@ -1,5 +1,4 @@
-import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 
 type Graph = Map<string, Set<string>>;
 
@@ -9,10 +8,9 @@ export const day23: Solution = {
 
     const triangles = findTrianglesNodeIterator(graph);
 
-    return Array.from(triangles)
-      .filter((triangle) =>
-        triangle.split(",").some((node) => node.startsWith("t"))
-      ).length;
+    return Array.from(triangles).filter((triangle) =>
+      triangle.split(",").some((node) => node.startsWith("t")),
+    ).length;
   },
 
   part2: async (input: string) => {
@@ -21,7 +19,7 @@ export const day23: Solution = {
     const cliques = bronKerbosch(graph);
 
     const maxClique = cliques.reduce((max, current) =>
-      current.size > max.size ? current : max
+      current.size > max.size ? current : max,
     );
 
     return [...maxClique].sort().join(",");

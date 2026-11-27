@@ -1,10 +1,10 @@
+import type { Solution } from "../../types.ts";
 import {
   countOccurrences,
   getInputLines,
   sortNumbers,
   sum,
 } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day1: Solution = {
   part1: async (input: string) => {
@@ -59,9 +59,10 @@ function split(lines: string[]): { left: number[]; right: number[] } {
   };
 }
 
-function sort(
-  { left, right }: { left: number[]; right: number[] },
-): { left: number[]; right: number[] } {
+function sort({ left, right }: { left: number[]; right: number[] }): {
+  left: number[];
+  right: number[];
+} {
   return {
     left: sortNumbers(left),
     right: sortNumbers(right),

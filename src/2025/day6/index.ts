@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 type Operation = "+" | "*";
 
@@ -30,13 +30,16 @@ export const day6: Solution = {
 };
 
 function problemSum(problem: Problem): number {
-  return problem.numbers.reduce((acc, num) => {
-    if (problem.operation === "+") {
-      return acc + num;
-    } else {
-      return acc * num;
-    }
-  }, problem.operation === "+" ? 0 : 1);
+  return problem.numbers.reduce(
+    (acc, num) => {
+      if (problem.operation === "+") {
+        return acc + num;
+      } else {
+        return acc * num;
+      }
+    },
+    problem.operation === "+" ? 0 : 1,
+  );
 }
 
 function parseMathInputPart2(input: string): Problem[] {
@@ -64,7 +67,6 @@ function parseMathInputPart2(input: string): Problem[] {
       });
 
       currentNumbers = [];
-      continue;
     }
   }
 
@@ -73,7 +75,7 @@ function parseMathInputPart2(input: string): Problem[] {
 
 function parseMathInput(input: string): Problem[] {
   const lines = getInputLines(input).map((line) =>
-    line.split(" ").filter(Boolean)
+    line.split(" ").filter(Boolean),
   );
 
   const maxWidth = Math.max(...lines.map((line) => line.length));

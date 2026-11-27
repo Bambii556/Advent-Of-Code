@@ -1,5 +1,5 @@
-import { log, memoize } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { memoize } from "../../utils/index.ts";
 
 const canMakePatternMem = memoize(canMakePattern);
 const countDifferentWaysMem = memoize(countDifferentWays);
@@ -64,9 +64,15 @@ function countDifferentWays(pattern: string, towels: string[]): number {
 
 function parseInput(input: string) {
   const sections = input.split("\n\n");
-  const towels = sections[0].trim().split(",").map((t) => t.trim());
+  const towels = sections[0]
+    .trim()
+    .split(",")
+    .map((t) => t.trim());
   return {
     towels,
-    patterns: sections[1].trim().split("\n").map((t) => t.trim()),
+    patterns: sections[1]
+      .trim()
+      .split("\n")
+      .map((t) => t.trim()),
   };
 }

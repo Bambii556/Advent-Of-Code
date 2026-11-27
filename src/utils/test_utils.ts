@@ -7,6 +7,8 @@ export interface TestCase {
 export interface DayTests {
   part1?: TestCase[];
   part2?: TestCase[];
+  part1Expected?: string | number;
+  part2Expected?: string | number;
 }
 
 export async function runTestPart(
@@ -41,7 +43,9 @@ export async function runTestPart(
 
   if (!allTestsPassed) {
     console.log(`\n❌ Part ${partNumber} tests failed:`);
-    failures.forEach((failure) => console.log(`  - ${failure}`));
+    failures.forEach((failure) => {
+      console.log(`  - ${failure}`);
+    });
     throw new Error(`Part ${partNumber} tests failed`);
   }
 

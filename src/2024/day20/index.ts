@@ -1,8 +1,11 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { ADJACENT_COORDS } from "../../utils/index.ts";
 
 class Location {
-  constructor(public row: number, public col: number) {}
+  constructor(
+    public row: number,
+    public col: number,
+  ) {}
 
   move(moveDir: number[]): Location {
     return new Location(this.row + moveDir[1], this.col + moveDir[0]);
@@ -93,10 +96,12 @@ function findNormalPath(
 }
 
 function isInBounds(loc: Location, raceMap: string[]): boolean {
-  return loc.row >= 0 &&
+  return (
+    loc.row >= 0 &&
     loc.row < raceMap.length &&
     loc.col >= 0 &&
-    loc.col < raceMap[0].length;
+    loc.col < raceMap[0].length
+  );
 }
 
 function findPathWithCheats(
@@ -146,16 +151,14 @@ function findCheats(
   let totalCheats = 0;
   const pathLookup = new Map<string, number>();
 
-  paths.forEach((loc, idx) => pathLookup.set(loc.toString(), idx));
+  paths.forEach((loc, idx) => {
+    pathLookup.set(loc.toString(), idx);
+  });
 
   for (let i = 0; i < paths.length; i++) {
     const start = paths[i];
 
-    const destinationsWithSteps = findPathWithCheats(
-      start,
-      map,
-      maxCheatSteps,
-    );
+    const destinationsWithSteps = findPathWithCheats(start, map, maxCheatSteps);
 
     for (const [destStr, cheatSteps] of destinationsWithSteps) {
       const destIdx = pathLookup.get(destStr);

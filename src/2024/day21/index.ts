@@ -1,4 +1,4 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { RegexPatterns } from "../../utils/utils.ts";
 
 type Point = { x: number; y: number };
@@ -28,17 +28,17 @@ const numpad: Record<NStates, Point> = {
   "1": { x: 2, y: 0 },
   "2": { x: 2, y: 1 },
   "3": { x: 2, y: 2 },
-  "E": { x: 3, y: 0 },
+  E: { x: 3, y: 0 },
   "0": { x: 3, y: 1 },
-  "A": { x: 3, y: 2 },
+  A: { x: 3, y: 2 },
 };
 
 const dpad: Record<DStates, Point> = {
-  "E": { x: 0, y: 0 },
+  E: { x: 0, y: 0 },
   "^": { x: 0, y: 1 },
-  "A": { x: 0, y: 2 },
+  A: { x: 0, y: 2 },
   "<": { x: 1, y: 0 },
-  "v": { x: 1, y: 1 },
+  v: { x: 1, y: 1 },
   ">": { x: 1, y: 2 },
 };
 
@@ -46,7 +46,7 @@ const directions: Record<Direction, Point> = {
   "^": { x: -1, y: 0 },
   ">": { x: 0, y: 1 },
   "<": { x: 0, y: -1 },
-  "v": { x: 1, y: 0 },
+  v: { x: 1, y: 0 },
 };
 
 export const day21: Solution = {
@@ -76,6 +76,7 @@ function solveRobots(codes: string[], robots: number) {
     const sequences = getNextSequence(numpad, code, robots, memo);
     const codeNumber = parseInt(
       code.match(RegexPatterns.numbers)?.[0] ?? "0",
+      10,
     );
     sum += codeNumber * sequences;
   }
@@ -157,8 +158,10 @@ function bfs(
       const neighbourKey = `${neighbour.x},${neighbour.y}`;
       if (
         isInBounds(neighbour) &&
-        !(forbiddenPosition.x === neighbour.x &&
-          forbiddenPosition.y === neighbour.y) &&
+        !(
+          forbiddenPosition.x === neighbour.x &&
+          forbiddenPosition.y === neighbour.y
+        ) &&
         (!distances.has(neighbourKey) ||
           distances.get(neighbourKey)! >= path.length + 1)
       ) {

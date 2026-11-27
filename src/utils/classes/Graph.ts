@@ -108,7 +108,8 @@ export default class Graph<T> {
     distances.set(getKey(start), 0);
     queue.push(0, start); // Changed from enqueue to push
 
-    while (!queue.isEmpty()) { // Changed from size() > 0
+    while (!queue.isEmpty()) {
+      // Changed from size() > 0
       const current = queue.pop(); // Changed from dequeue
       if (!current) break;
 
@@ -132,7 +133,8 @@ export default class Graph<T> {
         const newDist = currentDist + cost;
 
         if (
-          !distances.has(neighborKey) || newDist < distances.get(neighborKey)!
+          !distances.has(neighborKey) ||
+          newDist < distances.get(neighborKey)!
         ) {
           distances.set(neighborKey, newDist);
           previous.set(neighborKey, current);

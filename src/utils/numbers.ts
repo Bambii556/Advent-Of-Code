@@ -62,7 +62,7 @@ export function getSignedDifference(a: number, b: number): number {
  * getPercentageDifference(200, 150) // 25 (25% difference)
  */
 export function getPercentageDifference(a: number, b: number): number {
-  return Math.abs(a - b) / Math.max(a, b) * 100;
+  return (Math.abs(a - b) / Math.max(a, b)) * 100;
 }
 
 /**
@@ -230,7 +230,7 @@ export function scale(
   outMin: number,
   outMax: number,
 ): number {
-  return (num - inMin) * (outMax - outMin) / (inMax - inMin) + outMin;
+  return ((num - inMin) * (outMax - outMin)) / (inMax - inMin) + outMin;
 }
 
 /**

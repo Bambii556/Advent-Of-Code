@@ -1,6 +1,6 @@
-import { getInputLines, parseGrid } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
-import { Beam, Grid } from "./CustomGrid.ts";
+import type { Solution } from "../../types.ts";
+import { getInputLines } from "../../utils/index.ts";
+import { type Beam, Grid } from "./CustomGrid.ts";
 
 interface Tile {
   label: string;
@@ -65,16 +65,12 @@ function getEdgeBeams(grid: Grid): Beam[] {
       // is edge of grid
       if (x === 0) {
         beams.push({ direction: "right", x, y });
-        continue;
       } else if (x === grid.width - 1) {
         beams.push({ direction: "left", x, y });
-        continue;
       } else if (y === 0) {
         beams.push({ direction: "down", x, y });
-        continue;
       } else if (y === grid.height - 1) {
         beams.push({ direction: "up", x, y });
-        continue;
       }
     }
   }

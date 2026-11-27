@@ -1,12 +1,14 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day2: Solution = {
   part1: async (input: string) => {
-    const ids = getInputLines(input)[0].split(",").map((id) => ({
-      start: parseInt(id.split("-")[0]),
-      end: parseInt(id.split("-")[1]),
-    }));
+    const ids = getInputLines(input)[0]
+      .split(",")
+      .map((id) => ({
+        start: parseInt(id.split("-")[0], 10),
+        end: parseInt(id.split("-")[1], 10),
+      }));
     let sum = 0;
 
     ids.forEach((id) => {
@@ -27,10 +29,12 @@ export const day2: Solution = {
   },
 
   part2: async (input: string) => {
-    const ids = getInputLines(input)[0].split(",").map((id) => ({
-      start: parseInt(id.split("-")[0]),
-      end: parseInt(id.split("-")[1]),
-    }));
+    const ids = getInputLines(input)[0]
+      .split(",")
+      .map((id) => ({
+        start: parseInt(id.split("-")[0], 10),
+        end: parseInt(id.split("-")[1], 10),
+      }));
     let sum = 0;
 
     ids.forEach((id) => {

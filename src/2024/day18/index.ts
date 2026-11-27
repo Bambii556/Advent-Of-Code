@@ -1,5 +1,5 @@
-import { createGrid, getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { createGrid, getInputLines } from "../../utils/index.ts";
 
 type Point = {
   x: number;
@@ -40,16 +40,23 @@ function pointToKey(p: Point): string {
 }
 
 function isValidPoint(grid: string[][], point: Point): boolean {
-  return point.x >= 0 &&
+  return (
+    point.x >= 0 &&
     point.x < grid[0].length &&
     point.y >= 0 &&
     point.y < grid.length &&
-    grid[point.y][point.x] === ".";
+    grid[point.y][point.x] === "."
+  );
 }
 
 function getNeighbors(grid: string[][], point: Point): Point[] {
   const neighbors: Point[] = [];
-  const directions = [[0, 1], [1, 0], [0, -1], [-1, 0]]; // right, down, left, up
+  const directions = [
+    [0, 1],
+    [1, 0],
+    [0, -1],
+    [-1, 0],
+  ]; // right, down, left, up
 
   for (const [dx, dy] of directions) {
     const newPoint = {
@@ -108,22 +115,24 @@ function buildGrid(gridSize: Point, coords: Point[], bytesToFall: number) {
   return grid;
 }
 
-function parseInput(
-  input: string,
-): { gridSize: Point; bytes: Point[]; bytesToFall: number } {
+function parseInput(input: string): {
+  gridSize: Point;
+  bytes: Point[];
+  bytesToFall: number;
+} {
   const lines = getInputLines(input);
 
-  const bytesToFall = parseInt(lines.shift()!);
+  const bytesToFall = parseInt(lines.shift()!, 10);
 
   const gridSizes = lines.shift()!.split("x");
 
   const bytes = lines.map((line) => {
     const parts = line.split(",");
-    return { x: parseInt(parts[0]), y: parseInt(parts[1]) } as Point;
+    return { x: parseInt(parts[0], 10), y: parseInt(parts[1], 10) } as Point;
   });
 
   return {
-    gridSize: { x: parseInt(gridSizes[0]), y: parseInt(gridSizes[1]) },
+    gridSize: { x: parseInt(gridSizes[0], 10), y: parseInt(gridSizes[1], 10) },
     bytes,
     bytesToFall,
   };

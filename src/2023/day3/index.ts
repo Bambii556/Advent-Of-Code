@@ -1,11 +1,11 @@
+import type { Solution } from "../../types.ts";
+import { sum } from "../../utils/array.ts";
 import {
   findAllOccurrencesIndexesInGrid,
   getAdjacentWithDiagonals,
   isInBounds,
   parseGrid,
 } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
-import { sum } from "../../utils/array.ts";
 
 export const day3: Solution = {
   part1: async (input: string) => {
@@ -21,7 +21,7 @@ export const day3: Solution = {
           const newCol = col + val.length;
 
           if (isPartNumber(grid, row, col, newCol)) {
-            partNumbers.push(parseInt(val));
+            partNumbers.push(parseInt(val, 10));
           }
           col = newCol;
         }
@@ -56,10 +56,7 @@ function isPartNumber(
   const coords = new Map<string, string>();
   for (let i = startCol; i <= endCol; i++) {
     getAdjacentWithDiagonals(row, i).forEach(([x, y]) => {
-      if (
-        !coords.has(`${x},${y}`) &&
-        isInBounds(x, y, grid)
-      ) {
+      if (!coords.has(`${x},${y}`) && isInBounds(x, y, grid)) {
         coords.set(`${x},${y}`, grid[x][y]);
       }
     });
@@ -72,10 +69,7 @@ function getNumberFromPosition(x: number, y: number, grid: string[][]): string {
   let currentY = y + 1;
 
   // Traverse right until we hit a non-digit or end of grid
-  while (
-    isInBounds(x, currentY, grid) &&
-    isDigit(grid[x][currentY])
-  ) {
+  while (isInBounds(x, currentY, grid) && isDigit(grid[x][currentY])) {
     result += grid[x][currentY];
     currentY++;
   }
@@ -119,7 +113,7 @@ function getNumbersAroundPosition(
     const coordKey = `${adjX},${startY}`;
     if (!foundNumbers.has(coordKey)) {
       const numberStr = getNumberFromPosition(adjX, startY, grid);
-      numbers.push(parseInt(numberStr));
+      numbers.push(parseInt(numberStr, 10));
       foundNumbers.add(coordKey);
     }
   });

@@ -1,4 +1,4 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/input.ts";
 
 type Pulse = "HIGH" | "LOW";
@@ -22,16 +22,16 @@ class Module {
   // %bh -> nl, fr
   constructor(line: string) {
     const typeChar = line.charAt(0);
-    this.type = typeChar === "%"
-      ? "Flip-Flop"
-      : typeChar === "&"
-      ? "Conjunction"
-      : "Broadcaster";
+    this.type =
+      typeChar === "%"
+        ? "Flip-Flop"
+        : typeChar === "&"
+          ? "Conjunction"
+          : "Broadcaster";
 
     const [name, connections] = line.split("->");
-    this.key = this.type !== "Broadcaster"
-      ? name.substring(1).trim()
-      : name.trim();
+    this.key =
+      this.type !== "Broadcaster" ? name.substring(1).trim() : name.trim();
     this.outputs = connections
       ? connections.split(",").map((s) => s.trim())
       : [];
@@ -46,8 +46,8 @@ class Module {
   trigger(pulse: Pulse): Action[] {
     switch (this.type) {
       case "Conjunction": {
-        const allHigh = Array.from(this.connections).every((mod) =>
-          mod.state === "HIGH"
+        const allHigh = Array.from(this.connections).every(
+          (mod) => mod.state === "HIGH",
         );
         this.state = allHigh ? "LOW" : "HIGH";
         break;
@@ -116,9 +116,9 @@ export const day20: Solution = {
 
     const { modules, broadcaster } = buildModuleList(lines);
 
-    const rxFeeder: Module = modules.values().find((mod) =>
-      mod.outputs.includes("rx")
-    )!;
+    const rxFeeder: Module = modules
+      .values()
+      .find((mod) => mod.outputs.includes("rx"))!;
 
     const cycleLengths = new Map<string, number>();
     const inputModules = Array.from(rxFeeder.connections);
@@ -156,7 +156,7 @@ export const day20: Solution = {
 };
 
 function lcm(numbers: number[]): number {
-  const gcd = (a: number, b: number): number => b === 0 ? a : gcd(b, a % b);
+  const gcd = (a: number, b: number): number => (b === 0 ? a : gcd(b, a % b));
   const lcm2 = (a: number, b: number): number => (a * b) / gcd(a, b);
   return numbers.reduce(lcm2);
 }

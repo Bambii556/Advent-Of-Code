@@ -93,10 +93,7 @@ export function parseNumberGrid(input: string): Uint8Array[] {
  * parseKeyValue(input) // { a: '1', b: '2' }
  */
 export function parseKeyValue(input: string): Record<string, string> {
-  return Object.fromEntries(
-    input.split(" ")
-      .map((pair) => pair.split("=")),
-  );
+  return Object.fromEntries(input.split(" ").map((pair) => pair.split("=")));
 }
 
 /**
@@ -108,7 +105,8 @@ export function parseKeyValue(input: string): Record<string, string> {
  * parseCoordinates(input) // [[1,2], [3,4]]
  */
 export function parseCoordinates(input: string): [number, number][] {
-  return input.split("\n")
+  return input
+    .split("\n")
     .map((line) => line.split(",").map(Number) as [number, number]);
 }
 
@@ -121,11 +119,10 @@ export function parseCoordinates(input: string): [number, number][] {
  * parseInstructions(input) // [['forward', 5], ['down', 3]]
  */
 export function parseInstructions(input: string): [string, number][] {
-  return input.split("\n")
-    .map((line) => {
-      const [dir, amt] = line.split(" ");
-      return [dir, Number(amt)];
-    });
+  return input.split("\n").map((line) => {
+    const [dir, amt] = line.split(" ");
+    return [dir, Number(amt)];
+  });
 }
 
 /**
@@ -136,6 +133,7 @@ export function parseInstructions(input: string): [string, number][] {
  * parseRanges(input) // [[2,4], [6,8]]
  */
 export function parseRanges(input: string): [number, number][] {
-  return input.split(",")
+  return input
+    .split(",")
     .map((range) => range.split("-").map(Number) as [number, number]);
 }

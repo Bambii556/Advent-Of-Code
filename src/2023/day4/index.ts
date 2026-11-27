@@ -1,3 +1,4 @@
+import type { Solution } from "../../types.ts";
 import {
   createRange,
   FastQ,
@@ -7,7 +8,6 @@ import {
   memoize,
   sum,
 } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 type Card = {
   id: number;
@@ -25,7 +25,7 @@ export const day4: Solution = {
       if (common.length <= 0) {
         continue;
       }
-      cardPoints.push(Math.pow(2, common.length - 1));
+      cardPoints.push(2 ** (common.length - 1));
     }
 
     return sum(cardPoints);
@@ -34,7 +34,9 @@ export const day4: Solution = {
   part2: async (input: string) => {
     const cards = parseCards(input);
     const lookup = new Map<number, Card>();
-    cards.forEach((card) => lookup.set(card.id, card));
+    cards.forEach((card) => {
+      lookup.set(card.id, card);
+    });
 
     const cardsToProcess = FastQ.fromArray(cards);
     let winningCardCount = 0;

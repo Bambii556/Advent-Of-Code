@@ -1,7 +1,8 @@
-import { createGrid, getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import { appendFileSync } from "node:fs";
+import type { Solution } from "../../types.ts";
 import { findNumbers } from "../../utils/array.ts";
 import { isInBounds } from "../../utils/grid.ts";
+import { createGrid, getInputLines, log } from "../../utils/index.ts";
 
 type Robot = {
   id: number;
@@ -148,7 +149,8 @@ function findConnectedComponents(grid: number[][]): number {
 
 // Utility to print grid for debugging
 function gridToString(grid: number[][]): string {
-  return grid.map((row) => row.map((cell) => cell === 0 ? "." : "#").join(""))
+  return grid
+    .map((row) => row.map((cell) => (cell === 0 ? "." : "#")).join(""))
     .join("\n");
 }
 
@@ -178,15 +180,16 @@ function calcQuads(grid: number[][]) {
     }
   }
 
-  return counts.topLeft * counts.topRight * counts.bottomLeft *
-    counts.bottomRight;
+  return (
+    counts.topLeft * counts.topRight * counts.bottomLeft * counts.bottomRight
+  );
 }
 
 function printGrid(grid: number[][], seconds: number): void {
   const maxLength = Math.max(
     ...grid
       .flatMap((row) => Array.from(row))
-      .map((n) => n === 0 ? "." : n.toString())
+      .map((n) => (n === 0 ? "." : n.toString()))
       .map((s) => s.length),
   );
 
@@ -217,17 +220,19 @@ function printGridToFile(
 
   // Grid content
   const maxLength = Math.max(
-    ...grid.flatMap((row) => Array.from(row))
-      .map((n) => n === 0 ? "." : n.toString())
+    ...grid
+      .flatMap((row) => Array.from(row))
+      .map((n) => (n === 0 ? "." : n.toString()))
       .map((s) => s.length),
   );
   const padSize = maxLength;
 
   // Add each row
   for (const row of grid) {
-    output += Array.from(row)
-      .map((n) => (n === 0 ? "." : n.toString()).padStart(padSize))
-      .join("") + "\n";
+    output +=
+      Array.from(row)
+        .map((n) => (n === 0 ? "." : n.toString()).padStart(padSize))
+        .join("") + "\n";
   }
 
   output += "=".repeat(50) + "\n\n";
@@ -237,7 +242,7 @@ function printGridToFile(
 
   // Append to file
   try {
-    Deno.writeTextFileSync(filePath, output, { append: true });
+    appendFileSync(filePath, output);
   } catch (error) {
     console.error(`Failed to write to file: ${error}`);
   }
@@ -254,8 +259,8 @@ function parseGrid(input: string) {
   const lines = getInputLines(input);
 
   const gridSize = lines[0].split("x");
-  const cols = parseInt(gridSize[0]);
-  const rows = parseInt(gridSize[1]);
+  const cols = parseInt(gridSize[0], 10);
+  const rows = parseInt(gridSize[1], 10);
   const grid = createGrid(rows, cols, 0);
 
   const robots = [] as Robot[];

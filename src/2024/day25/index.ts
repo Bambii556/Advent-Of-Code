@@ -1,5 +1,5 @@
-import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { log } from "../../utils/index.ts";
 
 type Schematic = {
   type: "lock" | "key";
@@ -75,11 +75,7 @@ function parseSchematic(lines: string[]): Schematic | null {
   return { type, heights, totalHeight: lines.length - 1 };
 }
 
-function canFit(
-  lock: number[],
-  key: number[],
-  totalHeight: number,
-): boolean {
+function canFit(lock: number[], key: number[], totalHeight: number): boolean {
   return lock.every((pinHeight, i) => {
     const keyHeight = key[i];
     return pinHeight + keyHeight < totalHeight;

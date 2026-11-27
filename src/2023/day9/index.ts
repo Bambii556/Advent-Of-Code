@@ -1,10 +1,10 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day9: Solution = {
   part1: async (input: string) => {
     const lines = getInputLines(input).map((line) =>
-      line.split(" ").map(Number)
+      line.split(" ").map(Number),
     );
     let sum = 0;
     for (const line of lines) {
@@ -37,7 +37,7 @@ export const day9: Solution = {
 
   part2: async (input: string) => {
     const lines = getInputLines(input).map((line) =>
-      line.split(" ").map(Number)
+      line.split(" ").map(Number),
     );
     let sum = 0;
     for (const line of lines) {

@@ -1,10 +1,10 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day3: Solution = {
   part1: async (input: string) => {
     const banks = getInputLines(input).map((line) =>
-      line.split("").map(Number)
+      line.split("").map(Number),
     );
     let sum = 0;
     for (const bank of banks) {
@@ -15,12 +15,12 @@ export const day3: Solution = {
 
   part2: async (input: string) => {
     const banks = getInputLines(input).map((line) =>
-      line.split("").map(Number)
+      line.split("").map(Number),
     );
     let sum = 0;
     for (const bank of banks) {
       const result = findMax12Batteries(bank);
-      sum += parseInt(result);
+      sum += parseInt(result, 10);
     }
     return sum;
   },
@@ -31,7 +31,7 @@ function findMax(arr: number[]): number {
 
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = i + 1; j < arr.length; j++) {
-      const concatenated = parseInt(`${arr[i]}${arr[j]}`);
+      const concatenated = parseInt(`${arr[i]}${arr[j]}`, 10);
 
       if (concatenated > maxValue) {
         maxValue = concatenated;

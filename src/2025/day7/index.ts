@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface TachyonManifold {
   grid: string[][];
@@ -70,7 +70,8 @@ export const day7: Solution = {
       let count = 0;
 
       if (currentItem === "^") {
-        count = countTimelinesFrom(row + 1, col - 1) +
+        count =
+          countTimelinesFrom(row + 1, col - 1) +
           countTimelinesFrom(row + 1, col + 1);
       } else {
         count = countTimelinesFrom(row + 1, col);

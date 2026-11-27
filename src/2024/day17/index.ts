@@ -1,4 +1,4 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { RegexPatterns } from "../../utils/utils.ts";
 
 type ProgramState = {

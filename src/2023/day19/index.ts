@@ -1,5 +1,5 @@
-import { Solution } from "../../types.ts";
-import { parseInputs, Part, Workflow } from "./inputParser.ts";
+import type { Solution } from "../../types.ts";
+import { type Part, parseInputs, type Workflow } from "./inputParser.ts";
 
 interface Range {
   min: number;

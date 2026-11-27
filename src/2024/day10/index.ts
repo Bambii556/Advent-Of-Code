@@ -1,12 +1,12 @@
-import { getAdjacent, isInBounds, log, parseGrid } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { getAdjacent, isInBounds, parseGrid } from "../../utils/index.ts";
 
 type Grid = number[][];
 
 export const day10: Solution = {
   part1: async (input: string) => {
     const grid = parseGrid(input).map((row) =>
-      row.map((value) => parseInt(value))
+      row.map((value) => parseInt(value, 10)),
     );
 
     let totalScore = 0;
@@ -26,7 +26,7 @@ export const day10: Solution = {
 
   part2: async (input: string) => {
     const grid = parseGrid(input).map((row) =>
-      row.map((value) => parseInt(value))
+      row.map((value) => parseInt(value, 10)),
     );
 
     let totalRating = 0;

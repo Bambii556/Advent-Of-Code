@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 const MASK = (1 << 24) - 1;
 
@@ -26,8 +26,8 @@ export const day22: Solution = {
     for (const startSecret of startingSecrets) {
       const foundPatterns = new Set<string>();
       let secret = startSecret;
-      let prices = [secret % 10];
-      let changes: number[] = [];
+      const prices = [secret % 10];
+      const changes: number[] = [];
 
       // Generate sequence
       for (let i = 0; i < 2000; i++) {

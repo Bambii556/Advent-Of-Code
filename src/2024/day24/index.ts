@@ -1,4 +1,4 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 
 type GateType = "AND" | "OR" | "XOR";
 
@@ -94,8 +94,8 @@ export const day24: Solution = {
       const zVal = Array.from(wireCache.entries())
         .filter(([wire]) => wire.startsWith("z"))
         .sort((a, b) => {
-          const numA = parseInt(a[0].substring(1));
-          const numB = parseInt(b[0].substring(1));
+          const numA = parseInt(a[0].substring(1), 10);
+          const numB = parseInt(b[0].substring(1), 10);
           return numA - numB;
         })
         .map(([_, value]) => value)
@@ -152,11 +152,11 @@ function processGate(type: GateType, a: string, b: string): string {
 
   switch (type) {
     case "AND":
-      return (numA && numB) ? "1" : "0";
+      return numA && numB ? "1" : "0";
     case "OR":
-      return (numA || numB) ? "1" : "0";
+      return numA || numB ? "1" : "0";
     case "XOR":
-      return (numA !== numB) ? "1" : "0";
+      return numA !== numB ? "1" : "0";
     default:
       throw new Error(`Unknown gate type: ${type}`);
   }
@@ -218,8 +218,8 @@ function getBinaryNumber(wires: Map<string, string>, prefix: string): number {
   const bits = Array.from(wires.entries())
     .filter(([wire]) => wire.startsWith(prefix))
     .sort((a, b) => {
-      const numA = parseInt(a[0].substring(1));
-      const numB = parseInt(b[0].substring(1));
+      const numA = parseInt(a[0].substring(1), 10);
+      const numB = parseInt(b[0].substring(1), 10);
       return numA - numB;
     })
     .map(([_, value]) => value)

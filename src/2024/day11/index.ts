@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { memoize } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day11: Solution = {
   part1: async (input: string) => {

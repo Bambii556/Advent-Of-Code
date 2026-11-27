@@ -1,6 +1,6 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { findNumbers } from "../../utils/array.ts";
-import { log, timerSync } from "../../utils/logger.ts";
+import { log } from "../../utils/logger.ts";
 
 type Category =
   | "seed"

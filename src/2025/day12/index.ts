@@ -1,10 +1,10 @@
+import type { Solution } from "../../types.ts";
 import {
   createGrid,
   getAllCoordsOfCharacter,
   getAllGridRotations,
   getInputGroups,
 } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface Shape {
   id: number;
@@ -47,7 +47,7 @@ function parseInput(input: string): {
   const regionLines = shapeGroups.pop()!;
 
   const shapes: Shape[] = shapeGroups.map((group) => {
-    const shapeId = parseInt(group[0].slice(0, -1));
+    const shapeId = parseInt(group[0].slice(0, -1), 10);
     const grid = group.slice(1).map((line) => line.split(""));
 
     return {
@@ -63,8 +63,8 @@ function parseInput(input: string): {
       const match = line.trim().match(/^(\d+)x(\d+):\s*(.+)$/);
       if (!match) return null;
 
-      const width = parseInt(match[1]);
-      const height = parseInt(match[2]);
+      const width = parseInt(match[1], 10);
+      const height = parseInt(match[2], 10);
 
       return {
         width,
@@ -80,7 +80,7 @@ function parseInput(input: string): {
 
 function canFitAllShapes(shapes: Shape[], region: Region): boolean {
   const shapesToPlace: number[] = region.requiredShapes.flatMap((count, i) =>
-    Array(count).fill(i)
+    Array(count).fill(i),
   );
 
   if (shapesToPlace.length === 0) return true;
@@ -135,21 +135,8 @@ function tryPlaceShapes(
 
     for (let row = 0; row <= rowLimit; row++) {
       for (let col = 0; col <= colLimit; col++) {
-        if (
-          canPlace(
-            region,
-            shapeCoords,
-            row,
-            col,
-          )
-        ) {
-          place(
-            region,
-            shapeCoords,
-            row,
-            col,
-            shapeIndex,
-          );
+        if (canPlace(region, shapeCoords, row, col)) {
+          place(region, shapeCoords, row, col, shapeIndex);
 
           if (
             tryPlaceShapes(
@@ -194,9 +181,13 @@ function canPlace(
   return shapeCoords.every(([dr, dc]) => {
     const r = row + dr;
     const c = col + dc;
-    return r >= 0 && r < region.height &&
-      c >= 0 && c < region.width &&
-      region.grid[r][c] === ".";
+    return (
+      r >= 0 &&
+      r < region.height &&
+      c >= 0 &&
+      c < region.width &&
+      region.grid[r][c] === "."
+    );
   });
 }
 

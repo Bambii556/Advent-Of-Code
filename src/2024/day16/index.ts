@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { findFirstOccurrencesIndexInGrid, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 import { parseGrid } from "../../utils/input.ts";
 
 type Grid = string[][];
@@ -16,14 +16,14 @@ type Reindeer = {
 const moves: Record<Direction, [number, number]> = {
   "^": [0, -1],
   ">": [1, 0],
-  "v": [0, 1],
+  v: [0, 1],
   "<": [-1, 0],
 };
 
 const turns: Record<Direction, [Direction, Direction]> = {
   "^": ["<", ">"],
   ">": ["^", "v"],
-  "v": [">", "<"],
+  v: [">", "<"],
   "<": ["v", "^"],
 };
 
@@ -79,8 +79,10 @@ function solveMap(map: Grid): number {
     const newRow = current.row + mRow;
 
     if (
-      newCol >= 0 && newRow >= 0 &&
-      newCol < map[0].length && newRow < map.length &&
+      newCol >= 0 &&
+      newRow >= 0 &&
+      newCol < map[0].length &&
+      newRow < map.length &&
       map[newRow][newCol] !== "#"
     ) {
       queue.push({
@@ -152,8 +154,10 @@ function solveMapPart2(map: Grid): number {
     const newRow = current.row + mRow;
 
     if (
-      newCol >= 0 && newRow >= 0 &&
-      newCol < map[0].length && newRow < map.length &&
+      newCol >= 0 &&
+      newRow >= 0 &&
+      newCol < map[0].length &&
+      newRow < map.length &&
       map[newRow][newCol] !== "#"
     ) {
       const newPath = new Set(current.path);

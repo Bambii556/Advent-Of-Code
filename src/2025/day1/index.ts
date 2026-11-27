@@ -1,11 +1,11 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day1: Solution = {
   part1: async (input: string) => {
     const lines = getInputLines(input).map((l) => ({
       rotation: l.substring(0, 1),
-      value: parseInt(l.substring(1)),
+      value: parseInt(l.substring(1), 10),
     }));
     const start = 50;
     let currentPosition = start;
@@ -33,7 +33,7 @@ export const day1: Solution = {
   part2: async (input: string) => {
     const lines = getInputLines(input).map((l) => ({
       rotation: l.substring(0, 1),
-      value: parseInt(l.substring(1)),
+      value: parseInt(l.substring(1), 10),
     }));
     const start = 50;
     let currentPos = start;

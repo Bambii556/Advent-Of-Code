@@ -18,20 +18,36 @@ traversal problems at midnight.
 ## 🛠️ Tech Stack
 
 - **TypeScript** - Because I like my bugs to be type-safe
-- **Deno** - For when Node.js just isn't hipster enough
+- **Bun** - Runs the code and installs the packages
+- **Biome** - Formats, lints, and sorts imports
 - **Pure determination** - The most important dependency
 
 ## 🚀 Running the Code
 
 ```bash
-# Run a specific day
-deno task run 2025 4
+bun install
 
-# Run tests (spoiler: they probably pass)
-deno test
+# Scaffold a new day
+bun run scaffold 2025 13
+
+# Run one day: example tests, then the real input
+bun run day 2025 4
+
+# Run example tests for every day (or one year)
+bun run test
+bun run test 2025
+
+# Format, lint, and organise imports
+bun run check
+
+# Type-check
+bun run typecheck
 
 # Cry into your keyboard (not included in package.json)
 ```
+
+`bun test` runs the unit tests in `src/utils`; `bun run test` runs the Advent of
+Code day examples.
 
 ## 📁 Project Structure
 
@@ -42,6 +58,23 @@ src/
 ├── 2025/          # Current suffering
 └── utils/         # My growing collection of "I'll need this again" functions
 ```
+
+Adding a day is just creating `src/<year>/day<n>/` with `index.ts`,
+`tests.ts`, and `input.txt`. Days are discovered automatically — no
+registration list.
+
+`tests.ts` only holds the examples:
+
+```ts
+import type { DayTests } from "../../utils/test_utils.ts";
+
+export const tests: DayTests = {
+  part1: [{ input: "example", expected: 42 }],
+  part2: [],
+};
+```
+
+Add `part1Expected` / `part2Expected` to assert the real-input answer too.
 
 ## 🎯 Personal Goals
 

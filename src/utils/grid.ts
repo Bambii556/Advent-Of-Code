@@ -11,7 +11,12 @@
  * @example
  * getAdjacent(1, 1) // Returns [[1,0], [2,1], [1,2], [0,1]]
  */
-export const ADJACENT_COORDS = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+export const ADJACENT_COORDS = [
+  [-1, 0],
+  [1, 0],
+  [0, -1],
+  [0, 1],
+];
 export function getAdjacent(x: number, y: number): [number, number][] {
   return ADJACENT_COORDS.map(([dx, dy]) => [x + dx, y + dy]);
 }
@@ -66,11 +71,7 @@ export function getAdjacentWithTopAndBottom(
  * isInBounds(0, 0, grid) // true
  * isInBounds(2, 2, grid) // false
  */
-export function isInBounds<T>(
-  row: number,
-  col: number,
-  grid: T[][],
-): boolean {
+export function isInBounds<T>(row: number, col: number, grid: T[][]): boolean {
   return col >= 0 && col < grid[0].length && row >= 0 && row < grid.length;
 }
 
@@ -112,7 +113,9 @@ export function isInBounds<T>(
  */
 export function rotateGrid<T>(grid: T[][]): T[][] {
   const N = grid.length;
-  const rotated = Array(N).fill(0).map(() => Array(N).fill(0));
+  const rotated = Array(N)
+    .fill(0)
+    .map(() => Array(N).fill(0));
 
   for (let i = 0; i < N; i++) {
     for (let j = 0; j < N; j++) {

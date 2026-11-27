@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { parseGrid } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface Coord {
   r: number;

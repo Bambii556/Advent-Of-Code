@@ -308,10 +308,7 @@ export function unique<T>(arr: T[]): T[] {
  */
 export function zip<T1, T2>(arr1: T1[], arr2: T2[]): [T1, T2][] {
   const minLength = Math.min(arr1.length, arr2.length);
-  return Array.from(
-    { length: minLength },
-    (_, i) => [arr1[i], arr2[i]],
-  );
+  return Array.from({ length: minLength }, (_, i) => [arr1[i], arr2[i]]);
 }
 
 /**
@@ -400,7 +397,7 @@ export function transpose<T>(matrix: T[][]): T[][] {
   // matrix[0].map creates an array with length equal to the number of columns
   return matrix[0].map((_, colIndex) =>
     // For each column, map through all rows and get item at colIndex
-    matrix.map((row) => row[colIndex])
+    matrix.map((row) => row[colIndex]),
   );
 }
 
@@ -432,7 +429,7 @@ export function sequenceFromRange(
   const arr = new Float64Array(length);
 
   for (let i = 0; i < length; i++) {
-    arr[i] = start + (i * step);
+    arr[i] = start + i * step;
   }
 
   return Array.from(arr);
@@ -459,7 +456,7 @@ export function sequenceFromSteps(
   const arr = new Float64Array(steps);
 
   for (let i = 0; i < steps; i++) {
-    arr[i] = start + (i * increment);
+    arr[i] = start + i * increment;
   }
 
   return Array.from(arr);
@@ -673,7 +670,10 @@ export function sortUnique(arr: number[]): number[] {
  * getTopN(scores, 3) // [96, 92, 88] (top 3 scores)
  */
 export function getTopN(arr: number[], n: number): number[] {
-  return arr.slice().sort((a, b) => b - a).slice(0, n);
+  return arr
+    .slice()
+    .sort((a, b) => b - a)
+    .slice(0, n);
 }
 
 /**
@@ -817,7 +817,8 @@ function getPermutationsLarger<T>(array: T[]): T[][] {
   const result: T[][] = [];
   for (let i = 0; i < array.length; i++) {
     const current = array[i]; // Element to put first
-    const remaining = [ // All other elements
+    const remaining = [
+      // All other elements
       ...array.slice(0, i),
       ...array.slice(i + 1),
     ];
@@ -860,10 +861,7 @@ export function createRange(start: number, end: number): number[] {
   // Calculate length based on direction
   const length = Math.floor(Math.abs(end - start) / Math.abs(stepValue)) + 1;
 
-  return Array.from(
-    { length },
-    (_, i) => start + (i * stepValue),
-  );
+  return Array.from({ length }, (_, i) => start + i * stepValue);
 }
 
 /**

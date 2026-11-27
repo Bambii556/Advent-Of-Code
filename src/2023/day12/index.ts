@@ -1,10 +1,5 @@
-import {
-  getInputLines,
-  log,
-  memoize,
-  RegexPatterns,
-} from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { getInputLines, log } from "../../utils/index.ts";
 
 type Cache = Map<string, number>;
 type Spring = "." | "#" | "?";
@@ -65,9 +60,9 @@ function countArrangements(
 
   if (patternIndex === springs.length) {
     if (currentGroupSize > 0) {
-      return (groupIndex < groups.length &&
-          currentGroupSize === groups[groupIndex] &&
-          groupIndex === groups.length - 1)
+      return groupIndex < groups.length &&
+        currentGroupSize === groups[groupIndex] &&
+        groupIndex === groups.length - 1
         ? 1
         : 0;
     }
@@ -110,7 +105,8 @@ function countArrangements(
             cache,
           );
         } else if (
-          groupIndex < groups.length && currentGroupSize === groups[groupIndex]
+          groupIndex < groups.length &&
+          currentGroupSize === groups[groupIndex]
         ) {
           result += countArrangements(
             springs,

@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 export const day2: Solution = {
   part1: async (input: string) => {
@@ -56,11 +56,11 @@ function isValidSequence(levels: number[]): boolean {
 
 function printLevels(levels: number[], index: number) {
   const line = levels
-    .map((num, i) => i === index ? `(${num})` : `${num}`)
+    .map((num, i) => (i === index ? `(${num})` : `${num}`))
     .join(" ");
   log(`[ ${line} ]`);
 }
 
 function parseLevels(line: string) {
-  return line.split(" ").map((level) => parseInt(level));
+  return line.split(" ").map((level) => parseInt(level, 10));
 }

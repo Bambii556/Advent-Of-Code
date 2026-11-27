@@ -1,4 +1,4 @@
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 
 interface Range {
   min: number;

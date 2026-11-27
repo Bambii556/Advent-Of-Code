@@ -1,6 +1,6 @@
-import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { sum } from "../../utils/array.ts";
+import { getInputLines } from "../../utils/index.ts";
 
 type Game = {
   id: number;

@@ -1,6 +1,6 @@
-import { getInputLines } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { sum } from "../../utils/array.ts";
+import { getInputLines } from "../../utils/index.ts";
 
 type Card =
   | "A"
@@ -105,16 +105,16 @@ function sortHands(hands: Hand[]): Hand[] {
 }
 
 function parseInput(input: string) {
-  return getInputLines(input).map((line) => line.split(" ")).map(
-    (values, index) => {
+  return getInputLines(input)
+    .map((line) => line.split(" "))
+    .map((values, index) => {
       return {
         id: index,
         cards: values[0].split("").map((card) => card as Card),
         bid: Number(values[1]),
         score: 0,
       } as Hand;
-    },
-  );
+    });
 }
 
 function getHandScore(hand: Hand, jokerRule: boolean = false) {

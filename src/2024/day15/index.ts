@@ -1,6 +1,6 @@
-import { getInputLines, log } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
 import { sum } from "../../utils/array.ts";
+import { log } from "../../utils/index.ts";
 
 type Cell = "#" | "." | "O" | "@" | "[" | "]";
 type Direction = "^" | "v" | "<" | ">";
@@ -41,8 +41,9 @@ export const day15: Solution = {
         if (boxesToMove && boxesToMove.length > 0) {
           moveBoxesPart1(warehouse, boxesToMove, direction);
         }
-        warehouse
-          .map[warehouse.robotPosition.row][warehouse.robotPosition.col] = ".";
+        warehouse.map[warehouse.robotPosition.row][
+          warehouse.robotPosition.col
+        ] = ".";
         warehouse.robotPosition = nextRobotPosition;
         warehouse.map[nextRobotPosition.row][nextRobotPosition.col] = "@";
       }
@@ -76,8 +77,9 @@ export const day15: Solution = {
         if (boxesToMove && boxesToMove.length > 0) {
           moveBoxesPart2(warehouse, boxesToMove, direction);
         }
-        warehouse
-          .map[warehouse.robotPosition.row][warehouse.robotPosition.col] = ".";
+        warehouse.map[warehouse.robotPosition.row][
+          warehouse.robotPosition.col
+        ] = ".";
         warehouse.robotPosition = nextRobotPosition;
         warehouse.map[nextRobotPosition.row][nextRobotPosition.col] = "@";
       }
@@ -162,7 +164,7 @@ function calcDistancesPart1(map: FloorMap) {
     for (let c = 1; c < map[r].length - 1; c++) {
       const current = map[r][c];
       if (current === "O") {
-        distances.push((100 * r) + c);
+        distances.push(100 * r + c);
       }
     }
   }
@@ -179,7 +181,7 @@ function calcDistancesPart2(map: FloorMap) {
         const rightDistance = c + 1; // Since box is 2 wide
         const minDistance = Math.min(leftDistance, rightDistance);
 
-        distances.push((100 * r) + minDistance);
+        distances.push(100 * r + minDistance);
       }
     }
   }
@@ -225,9 +227,10 @@ function validateMove(
       const startCol = nextCell === "]" ? nextCoord.col - 1 : nextCoord.col;
 
       // Check if we already have this box
-      const exists = boxesToMove.some((box) =>
-        box.row === nextCoord.row &&
-        (box.col === startCol || box.col === startCol + 1)
+      const exists = boxesToMove.some(
+        (box) =>
+          box.row === nextCoord.row &&
+          (box.col === startCol || box.col === startCol + 1),
       );
 
       if (!exists) {
@@ -317,8 +320,9 @@ function parseWarehouse(input: string): Warehouse {
   const moves = movesSection
     .replace(/\n/g, "")
     .split("")
-    .filter((char): char is Direction =>
-      char === "^" || char === "v" || char === "<" || char === ">"
+    .filter(
+      (char): char is Direction =>
+        char === "^" || char === "v" || char === "<" || char === ">",
     );
 
   return {
@@ -342,9 +346,7 @@ function printMap(
   displayMap[robotPosition.row][robotPosition.col] = "@";
 
   // Convert map to string representation
-  const mapString = displayMap
-    .map((row) => row.join(""))
-    .join("\n");
+  const mapString = displayMap.map((row) => row.join("")).join("\n");
 
   // Print the map
   log("\nCurrent warehouse state:");
@@ -360,7 +362,7 @@ function printColorMap(
 ) {
   const colors = {
     "#": "\x1b[90m", // Gray for walls
-    "O": "\x1b[33m", // Yellow for boxes
+    O: "\x1b[33m", // Yellow for boxes
     "[": "\x1b[33m", // Yellow for boxes
     "]": "\x1b[33m", // Yellow for boxes
     "@": "\x1b[32m", // Green for robot
@@ -373,7 +375,7 @@ function printColorMap(
 
   const mapString = displayMap
     .map((row) =>
-      row.map((cell) => `${colors[cell]}${cell}${colors.reset}`).join("")
+      row.map((cell) => `${colors[cell]}${cell}${colors.reset}`).join(""),
     )
     .join("\n");
 

@@ -7,7 +7,7 @@
  */
 
 import PriorityQueue from "./classes/PriorityQueue.ts";
-import { Point } from "./index.ts";
+import type { Point } from "./index.ts";
 
 /**
  * A* pathfinding algorithm implementation.
@@ -202,7 +202,7 @@ export function dijkstra(
   }
 
   return new Map(
-    Array.from(distances.entries()).map(([k, v]) => [parseInt(k), v]),
+    Array.from(distances.entries()).map(([k, v]) => [parseInt(k, 10), v]),
   );
 }
 
@@ -231,17 +231,25 @@ export function dijkstraGrid(
     const currentDist = distances.get(currentKey)!;
 
     // Check all four directions
-    const directions = [[-1, 0], [1, 0], [0, -1], [0, 1]];
+    const directions = [
+      [-1, 0],
+      [1, 0],
+      [0, -1],
+      [0, 1],
+    ];
     for (const [dx, dy] of directions) {
       const newX = x + dx;
       const newY = y + dy;
 
       // Skip if out of bounds or wall
       if (
-        newX < 0 || newX >= grid[0].length ||
-        newY < 0 || newY >= grid.length ||
+        newX < 0 ||
+        newX >= grid[0].length ||
+        newY < 0 ||
+        newY >= grid.length ||
         grid[newY][newX] === "#"
-      ) continue;
+      )
+        continue;
 
       const neighborKey = `${newX},${newY}`;
       if (visited.has(neighborKey)) continue;

@@ -1,5 +1,5 @@
-import { log, sum } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { sum } from "../../utils/index.ts";
 
 type EQ = {
   testValue: number;

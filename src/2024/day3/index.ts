@@ -1,5 +1,5 @@
+import type { Solution } from "../../types.ts";
 import { log, RegexPatterns, sum } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
 
 interface Match {
   index: number;
@@ -20,7 +20,7 @@ export const day3: Solution = {
 
     const instructions = matches.map((match) => {
       const [a, b] = match[0].match(RegexPatterns.numbers)!;
-      return { a: parseInt(a), b: parseInt(b) };
+      return { a: parseInt(a, 10), b: parseInt(b, 10) };
     });
 
     const result: number[] = [];
@@ -38,26 +38,22 @@ export const day3: Solution = {
     const doPattern = "do\\(\\)";
     const dontPatter = "don't\\(\\)";
     const matches: Match[] = [
-      ...(input.matchAll(new RegExp(pattern, "g")).map((match) => {
+      ...input.matchAll(new RegExp(pattern, "g")).map((match) => {
         return { index: match.index, type: MatchType.MUL, value: match[0] };
-      })),
+      }),
     ];
     const doMatches = [
-      ...(input.matchAll(new RegExp(doPattern, "g")).map((match) => {
+      ...input.matchAll(new RegExp(doPattern, "g")).map((match) => {
         return { index: match.index, type: MatchType.DO, value: match[0] };
-      })),
+      }),
     ];
     const dontMatches = [
-      ...(input.matchAll(new RegExp(dontPatter, "g")).map((match) => {
+      ...input.matchAll(new RegExp(dontPatter, "g")).map((match) => {
         return { index: match.index, type: MatchType.DONT, value: match[0] };
-      })),
+      }),
     ];
 
-    const combined: Match[] = [
-      ...matches,
-      ...doMatches,
-      ...dontMatches,
-    ];
+    const combined: Match[] = [...matches, ...doMatches, ...dontMatches];
 
     const sorted = combined.slice().sort((a, b) => a.index - b.index);
 
@@ -76,7 +72,7 @@ export const day3: Solution = {
 
       if (enabled && m.type === MatchType.MUL) {
         const [a, b] = m.value.match(RegexPatterns.numbers)!;
-        result.push(parseInt(a) * parseInt(b));
+        result.push(parseInt(a, 10) * parseInt(b, 10));
       }
     }
 

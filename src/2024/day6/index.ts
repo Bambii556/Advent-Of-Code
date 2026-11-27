@@ -1,11 +1,6 @@
-import {
-  countOccurrencesInGrid,
-  getInputLines,
-  isInBounds,
-  log,
-  parseGrid,
-} from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import { writeFileSync } from "node:fs";
+import type { Solution } from "../../types.ts";
+import { isInBounds, log, parseGrid } from "../../utils/index.ts";
 
 enum Direction {
   UP,
@@ -106,9 +101,11 @@ function traverseMap(map: string[][], checkForLoop = false): Set<number> {
   const visited = new Set<number>();
 
   while (true) {
-    const { nextRow, nextCol } = getNextCoordinate(
-      { row, col, direction } as Guard,
-    );
+    const { nextRow, nextCol } = getNextCoordinate({
+      row,
+      col,
+      direction,
+    } as Guard);
     const nextChar = map[nextRow]?.[nextCol];
 
     if (checkForLoop) {
@@ -386,7 +383,7 @@ function printMap(map: string[][], isFile = false) {
     const mapString = map.map((row) => row.join("")).join("\n");
 
     try {
-      Deno.writeTextFileSync("./map", mapString);
+      writeFileSync("./map", mapString);
     } catch (error) {
       console.error(`Error writing to file: ${error}`);
     }

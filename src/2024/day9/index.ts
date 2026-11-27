@@ -1,5 +1,5 @@
-import { log, sum } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { sum } from "../../utils/index.ts";
 
 export const day9: Solution = {
   part1: async (input: string) => {
@@ -21,7 +21,7 @@ function parseInput(input: string) {
   let fileIndex = 0;
 
   for (let index = 0; index < input.length; index++) {
-    const element = parseInt(input[index]);
+    const element = parseInt(input[index], 10);
     if (isFile) {
       for (let i = 0; i < element; i++) {
         blocks.push(fileIndex.toString());
@@ -56,9 +56,9 @@ function compactFiles(blocks: string[]) {
 
   for (let i = 0; i < valueGroups.length; i++) {
     const valueGroup = valueGroups[i];
-    const dotGroup = dotGroups.find((dot) =>
-      dot.startIndex < valueGroup.startIndex &&
-      dot.count >= valueGroup.count
+    const dotGroup = dotGroups.find(
+      (dot) =>
+        dot.startIndex < valueGroup.startIndex && dot.count >= valueGroup.count,
     );
 
     if (dotGroup) {
@@ -88,7 +88,7 @@ function getChecksum(blocks: string[]) {
     if (value === ".") {
       continue;
     }
-    checksums.push(index * parseInt(value));
+    checksums.push(index * parseInt(value, 10));
   }
 
   return sum(checksums);
@@ -99,7 +99,8 @@ function swapDotWithValue(arr: string[]): [string[], boolean] {
   const lastValueIndex = arr.findLastIndex((val) => val !== ".");
 
   if (
-    firstDotIndex !== -1 && lastValueIndex !== -1 &&
+    firstDotIndex !== -1 &&
+    lastValueIndex !== -1 &&
     firstDotIndex < lastValueIndex
   ) {
     [arr[firstDotIndex], arr[lastValueIndex]] = [

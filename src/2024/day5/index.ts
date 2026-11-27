@@ -1,5 +1,5 @@
-import { log, sum, timer } from "../../utils/index.ts";
-import { Solution } from "../../types.ts";
+import type { Solution } from "../../types.ts";
+import { sum, timerSync } from "../../utils/index.ts";
 
 type Rule = [number, number]; // [before, after]
 type Update = number[];
@@ -19,9 +19,8 @@ export const day5: Solution = {
 
     const invalidUpdates = getInvalidUpdates(rules, updates);
 
-    const reorderedUpdates = await timer(
-      "Reordering updates",
-      () => reorderUpdates(invalidUpdates, rules),
+    const reorderedUpdates = timerSync("Reordering updates", () =>
+      reorderUpdates(invalidUpdates, rules),
     );
     // const reorderedUpdates = reorderUpdates(invalidUpdates, rules);
     const sumMiddle = getMiddles(reorderedUpdates);
@@ -33,17 +32,13 @@ export const day5: Solution = {
 function parseInput(input: string): { rules: Rule[]; updates: Update[] } {
   const [rulesStr, updatesStr] = input.trim().split("\n\n");
 
-  const rules = rulesStr.split("\n")
-    .map((line) =>
-      line.split("|")
-        .map(Number) as Rule
-    );
+  const rules = rulesStr
+    .split("\n")
+    .map((line) => line.split("|").map(Number) as Rule);
 
-  const updates = updatesStr.split("\n")
-    .map((line) =>
-      line.split(",")
-        .map(Number)
-    );
+  const updates = updatesStr
+    .split("\n")
+    .map((line) => line.split(",").map(Number));
 
   return { rules, updates };
 }
@@ -77,8 +72,8 @@ function getMiddles(updates: Update[]) {
 
 function reorderUpdates(updates: Update[], rules: Rule[]): Update[] {
   return updates.map((update) => {
-    const appliedRules = rules.filter(([before, after]) =>
-      update.includes(before) && update.includes(after)
+    const appliedRules = rules.filter(
+      ([before, after]) => update.includes(before) && update.includes(after),
     );
 
     const newUpdate: Update = [...update];
@@ -100,12 +95,9 @@ function reorderUpdates(updates: Update[], rules: Rule[]): Update[] {
   });
 }
 
-function getFailedRules(
-  rules: Rule[],
-  update: Update,
-): Rule[] {
-  const failedRules = rules.filter(([before, after]) =>
-    update.indexOf(before) > update.indexOf(after)
+function getFailedRules(rules: Rule[], update: Update): Rule[] {
+  const failedRules = rules.filter(
+    ([before, after]) => update.indexOf(before) > update.indexOf(after),
   );
 
   return failedRules;

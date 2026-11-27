@@ -15,7 +15,9 @@ export default class FastQ<T> {
 
   constructor(items?: T[]) {
     if (items) {
-      items.forEach((item) => this.addBack(item));
+      items.forEach((item) => {
+        this.addBack(item);
+      });
     }
   }
 
